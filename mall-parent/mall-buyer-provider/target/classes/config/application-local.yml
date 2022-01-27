@@ -1,0 +1,86 @@
+spring:
+  jackson:
+    time-zone: GMT+8
+  application:
+    name: mall-buyer-provider
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ms_mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: root
+
+  redis:
+    host: localhost
+    port: 6379
+
+  shardingsphere:
+    datasource:
+      common:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: root
+      names: master, slave0, slave1
+      master:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ms_mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+        username: root
+        password: root
+      slave0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ms_mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+        username: root
+        password: root
+      slave1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ms_mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+        username: root
+        password: root
+
+    rules:
+      readwrite-splitting:
+        data-sources:
+          ms:
+            write-data-source-name: master
+            read-data-source-names:
+              - slave0
+              - slave1
+            load-balancer-name: round-robin
+
+        load-balancers:
+          round-robin:
+            type: ROUND_ROBIN
+            props:
+              workId: 1
+
+    props:
+      sql-show: true
+
+dubbo:
+  scan:
+    base-packages: com.soul.shop.buyer.service
+  protocol:
+    name: dubbo
+    port: 20880
+#  consumer:
+#    check: true # 启动时检查提供者是否存在，true保存，false忽略
+  registry:
+    check: false
+    group: dubbo_buyer_service # 设置根节点，不配置将使用默认的根节点
+#    # Dubbo Registry
+    address: nacos://${nacos.server-address}:${nacos.port}/?username=${nacos.username}&password=${nacos.password}
+
+nacos:
+  server-address: 127.0.0.1
+  port: 8848
+  username: nacos
+  password: nacos
+
+
+
+
+

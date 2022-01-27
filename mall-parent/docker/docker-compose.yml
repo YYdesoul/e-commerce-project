@@ -1,0 +1,33 @@
+version: "3.5"
+services:
+  mall-nacos:
+    image: nacos/nacos-server:2.0.2
+    container_name: mall-nacos
+    ports:
+      - 8848:8848
+    environment:
+      - MODE=standalone
+    networks:
+      - mall
+
+
+  mall-mysql:
+    image: mysql:8.0.27
+    container_name: mall-mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    security_opt:
+      - seccomp:unconfined
+    networks:
+      - mall
+
+
+networks:
+  mall:
+    name: mall
+    driver: bridge
+
+
+

@@ -1,0 +1,26 @@
+spring:
+  jackson:
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+buyer:
+  url: http://localhost:10000
+
+dubbo:
+  consumer:
+    check: true # 启动时检查提供者是否存在，true保存，false忽略
+  registry:
+    group: dubbo_buyer_service # 设置根节点，不配置将使用默认的根节点
+    # Dubbo Registry
+    address: nacos://${nacos.server-address}:${nacos.port}/?username=${nacos.username}&password=${nacos.password}
+
+nacos:
+  server-address: 127.0.0.1
+  port: 8848
+  username: nacos
+  password: nacos
+
+

@@ -1,0 +1,13 @@
+server:
+  port: 9991
+  servlet:
+    # 接口访问路径限定
+    context-path: /buyer
+
+
+spring:
+  application:
+    name: mall-buyer
+  profiles:
+    # 本机开发环境
+    active: local

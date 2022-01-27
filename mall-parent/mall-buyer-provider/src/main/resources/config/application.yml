@@ -1,0 +1,24 @@
+server:
+  port: 19991
+  servlet:
+    # 接口访问路径限定
+    context-path: /buyer
+
+
+spring:
+  application:
+    name: mall-buyer-provider
+  profiles:
+    # 本机开发环境
+    active: local
+
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: ms_
+  mapper-locations: classpath*:mapper/*.xml
+
+qiniu:
+  file:
+    server:
+      url: https://static.mszlu.com
