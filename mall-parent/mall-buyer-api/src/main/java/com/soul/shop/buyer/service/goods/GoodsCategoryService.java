@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class GoodsCategoryService {
 
+  /**
+   * 1. 问nacos是否有此服务，如果偶就返回调用链接
+   * 2. rpc调用
+   * 3. 传参以及解析返回的参数（序列化与反序列化的过程）
+   */
   @DubboReference(version = "1.0.0")
   private CategoryService categoryService;
 

@@ -23,6 +23,14 @@ services:
     networks:
       - mall
 
+  mall-redis:
+    image: redis:6.2.6
+    container_name: mall-redis
+    ports:
+      - 6379:6379
+    networks:
+      - mall
+
 
 networks:
   mall:
