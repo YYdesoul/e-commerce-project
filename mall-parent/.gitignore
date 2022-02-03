@@ -99,4 +99,4 @@ hs_err_pid*
 
 # all target folder
 target
-.DS_Store
+**/.DS_Store
