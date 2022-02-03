@@ -1,9 +1,8 @@
-package com.soul.shop.model.buyer.vo;
+package com.soul.shop.model.buyer.vo.article;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

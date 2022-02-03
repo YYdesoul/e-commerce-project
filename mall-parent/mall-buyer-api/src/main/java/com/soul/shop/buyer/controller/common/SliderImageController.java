@@ -2,6 +2,7 @@ package com.soul.shop.buyer.controller.common;
 
 import com.soul.shop.buyer.service.common.VerificationService;
 import com.soul.shop.common.vo.Result;
+import com.soul.shop.model.buyer.enums.VerificationEnums;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,14 @@ public class SliderImageController {
   @GetMapping("/{verificationEnums}")
   @ApiOperation("获取校验接口")
   public Result getSliderImage(@RequestHeader String uuid,
-      @PathVariable("varificationEnums") Integer verificationCode) {
-    return verificationService.createVerification(verificationCode, uuid);
+      @PathVariable("verificationEnums") VerificationEnums verificationEnums) {
+    return verificationService.createVerification(verificationEnums, uuid);
   }
 
-  @PostMapping("/{verificationEnums}")
+  @PostMapping("/LOGIN")
   @ApiOperation("验证码预校验")
-  public Result getSliderImage(@RequestHeader String uuid,
-      @PathVariable("verificationEnums") Integer verificationCode,
+  public Result getSliderImage(@RequestHeader String uuid, VerificationEnums verificationEnums,
       Integer xPos) {
-    return verificationService.preCheck(verificationCode, uuid, xPos);
+    return verificationService.preCheck(verificationEnums, uuid, xPos);
   }
 }

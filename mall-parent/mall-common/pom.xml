@@ -41,5 +41,9 @@
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
     </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-web</artifactId>
+      </dependency>
   </dependencies>
 </project>

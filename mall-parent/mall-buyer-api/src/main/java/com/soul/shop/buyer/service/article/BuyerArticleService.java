@@ -2,10 +2,9 @@ package com.soul.shop.buyer.service.article;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.soul.shop.buyer.service.ArticleService;
-import com.soul.shop.common.vo.Result;
 import com.soul.shop.model.buyer.params.ArticleSearchParams;
-import com.soul.shop.model.buyer.vo.ArticleCategoryVO;
-import com.soul.shop.model.buyer.vo.ArticleVO;
+import com.soul.shop.model.buyer.vo.article.ArticleCategoryVO;
+import com.soul.shop.model.buyer.vo.article.ArticleVO;
 import java.util.List;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;

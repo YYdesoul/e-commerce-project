@@ -16,10 +16,14 @@
         <module name="mall-common" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mall-buyer-login" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="mall-buyer-api" options="-parameters" />
+      <module name="mall-buyer-login" options="-parameters" />
       <module name="mall-buyer-provider" options="-parameters" />
       <module name="mall-common" options="-parameters" />
       <module name="mall-dao" options="-parameters" />

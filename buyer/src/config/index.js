@@ -17,7 +17,7 @@ export default {
    * @description api请求基础路径
    */
   api_dev: {
-    common: 'http://localhost:9990',
+    common: 'http://localhost:9991/buyer',
     buyer: 'http://localhost:9991',
     seller: 'http://localhost:9992',
     manager: 'http://localhost:9993'

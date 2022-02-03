@@ -1,4 +1,4 @@
-package com.soul.shop.model.buyer.vo;
+package com.soul.shop.model.buyer.vo.article;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

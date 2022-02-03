@@ -1,10 +1,9 @@
 package com.soul.shop.buyer.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.soul.shop.common.vo.Result;
 import com.soul.shop.model.buyer.params.ArticleSearchParams;
-import com.soul.shop.model.buyer.vo.ArticleCategoryVO;
-import com.soul.shop.model.buyer.vo.ArticleVO;
+import com.soul.shop.model.buyer.vo.article.ArticleCategoryVO;
+import com.soul.shop.model.buyer.vo.article.ArticleVO;
 import java.util.List;
 
 public interface ArticleService {
