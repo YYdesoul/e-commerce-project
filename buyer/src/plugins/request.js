@@ -12,6 +12,10 @@ export const buyerUrl =
   process.env.NODE_ENV === 'development'
     ? config.api_dev.buyer
     : config.api_prod.buyer;
+export const ssoUrl =
+process.env.NODE_ENV === 'development'
+  ? config.api_dev.sso
+  : config.api_prod.sso;
 export const commonUrl =
   process.env.NODE_ENV === 'development'
     ? config.api_dev.common

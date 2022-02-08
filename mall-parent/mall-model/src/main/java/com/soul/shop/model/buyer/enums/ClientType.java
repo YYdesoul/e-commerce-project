@@ -7,7 +7,9 @@ public enum ClientType {
 
   PC(0, "pc"),
   H5(1, "h5"),
-  WAP(2, "wap");
+  WAP(2, "wap"),
+  UNKNOWN(3, "UNKNOWN");
+
 
   private int code;
   private String message;
@@ -31,5 +33,9 @@ public enum ClientType {
 
   public String getMessage() {
     return message;
+  }
+
+  public static ClientType codeOf(int code){
+    return CODE_MAP.get(code);
   }
 }

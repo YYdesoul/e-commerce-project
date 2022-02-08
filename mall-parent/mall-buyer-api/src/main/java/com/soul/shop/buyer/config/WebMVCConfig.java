@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMVCConfig implements WebMvcConfigurer {
 
-  @Value("http://localhost:10003")
+  @Value("${buyer.url}")
   private String buyerUrl;
 
   @Override

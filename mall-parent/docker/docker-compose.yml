@@ -36,6 +36,36 @@ services:
     networks:
       - mall
 
+  mall-es:
+    build:
+      context: ./es
+    image: elasticsearch:7.12.1
+    container_name: mall-es
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - "discovery.type=single-node"
+    networks:
+      - mall
+    restart: always
+
+  mall-kibana:
+    image: kibana:7.12.1
+    container_name: mall-kibana
+    links:
+      - mall-es
+    depends_on:
+      - mall-es
+    networks:
+      - mall
+    ports:
+      - 5601:5601
+#    volumes:
+#      - ./es/kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      - ELASTICSEARCH_HOSTS=http://mall-es:9200
+    restart: always
 
 networks:
   mall:

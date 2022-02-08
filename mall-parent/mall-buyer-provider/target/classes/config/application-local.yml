@@ -14,6 +14,18 @@ spring:
     host: localhost
     port: 6379
 
+  # es
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      client:
+        reactive:
+          endpoints: http://localhost:9200
+
   shardingsphere:
     datasource:
       common:
@@ -62,7 +74,9 @@ spring:
 
 dubbo:
   scan:
-    base-packages: com.soul.shop.buyer.service
+    base-packages: com.soul.shop
+#      - com.soul.shop.buyer.service
+#      - com.soul.shop.sso.api
   protocol:
     name: dubbo
     port: 20880
@@ -79,6 +93,7 @@ nacos:
   port: 8848
   username: nacos
   password: nacos
+
 
 
 

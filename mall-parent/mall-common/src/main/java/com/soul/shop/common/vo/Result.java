@@ -42,11 +42,19 @@ public class Result<T> implements Serializable {
   }
 
   public static <T> Result<T> fail(Integer code, String message){
-    return new Result<>(true,message,code,null);
+    return new Result<>(false, message,code,null);
   }
 
   public static <T> Result<T> fail(){
-    return new Result<>(true,BusinessCodeEnum.DEFAULT_SYS_ERROR.getMsg(),BusinessCodeEnum.DEFAULT_SYS_ERROR.getCode(),null);
+    return new Result<>(false, BusinessCodeEnum.DEFAULT_SYS_ERROR.getMsg(),BusinessCodeEnum.DEFAULT_SYS_ERROR.getCode(),null);
+  }
+
+  public static <T> Result<T> noPermission(){
+    return new Result<>(false, BusinessCodeEnum.HTTP_NO_PERMISSION.getMsg(),BusinessCodeEnum.HTTP_NO_PERMISSION.getCode(),null);
+  }
+
+  public static <T> Result<T> noLogin() {
+    return new Result<>(false,BusinessCodeEnum.HTTP_NO_LOGIN.getMsg(),BusinessCodeEnum.HTTP_NO_LOGIN.getCode(),null);
   }
 
 }

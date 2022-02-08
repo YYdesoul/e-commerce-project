@@ -4,6 +4,16 @@ server:
     # 接口访问路径限定
     context-path: /buyer
 
+# 配置不需要登录就可以访问的url
+ignored:
+  urls:
+    - /pages/**
+    - /pageData/**
+    - /article/**
+    - /goods/**
+    - /members/**
+    - /category/**
+    - /common/**
 
 spring:
   application:
@@ -11,3 +21,5 @@ spring:
   profiles:
     # 本机开发环境
     active: local
+
+

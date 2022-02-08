@@ -1,5 +1,5 @@
 
-import request, {Method, buyerUrl} from '@/plugins/request.js';
+import request, {Method, buyerUrl, ssoUrl} from '@/plugins/request.js';
 
 /**
  * 注册
@@ -18,7 +18,7 @@ export function regist (params) {
  */
 export function login (params) {
   return request({
-    url: '/buyer/members/userLogin',
+    url: `${ssoUrl}/sso/members/userLogin`,
     method: Method.POST,
     needToken: false,
     data: params,

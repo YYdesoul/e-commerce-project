@@ -19,12 +19,14 @@ export default {
   api_dev: {
     common: 'http://localhost:9991/buyer',
     buyer: 'http://localhost:9991',
+    sso: 'http://localhost:9989',
     seller: 'http://localhost:9992',
     manager: 'http://localhost:9993'
   },
   api_prod: {
     common: 'https://mall.mszlu.com/common',
     buyer: 'https://mall.mszlu.com/buyer',
+    sso: 'http://localhost:9989',
     seller: 'https://mall.mszlu.com/seller',
     manager: 'https://mall.mszlu.com/admin'
   },

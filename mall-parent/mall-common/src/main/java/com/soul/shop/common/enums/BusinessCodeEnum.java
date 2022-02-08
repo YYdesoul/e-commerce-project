@@ -23,7 +23,10 @@ public enum BusinessCodeEnum {
   CHECK_BIZ_ERROR_VALIDATE_CODE(1000000002,"检查业务验证码错误"),
   CHECK_BIZ_ERROR_MOBILE_USED(1000000003,"检查业务电话号码已被使用"),
   //login
-  NO_LOGIN(1000000200,"未登录");
+  HTTP_NO_LOGIN(401,"登录已失效，请重新登录"),
+  HTTP_NO_PERMISSION(403,"抱歉，您没有访问权限"),
+  NO_LOGIN(100000200, "未登录");
+
 
 
   private static final Map<Integer, BusinessCodeEnum> codeMap = new HashMap<Integer, BusinessCodeEnum>((int)(BusinessCodeEnum.values().length/0.75)+1);

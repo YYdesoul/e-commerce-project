@@ -11,7 +11,7 @@
     <module>mall-service-impl</module>
     <module>mall-buyer-api</module>
     <module>mall-buyer-provider</module>
-      <module>mall-buyer-login</module>
+    <module>mall-sso</module>
   </modules>
   <parent>
     <groupId>org.springframework.boot</groupId>

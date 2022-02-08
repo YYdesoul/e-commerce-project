@@ -3,6 +3,12 @@ package com.soul.shop.buyer.service.goods;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import com.soul.shop.buyer.service.GoodsService;
+import com.soul.shop.model.buyer.params.EsGoodsSearchParam;
+import com.soul.shop.model.buyer.params.PageParams;
+import com.soul.shop.model.buyer.vo.goods.GoodsPageVO;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
@@ -15,6 +21,9 @@ public class GoodsSearchService {
 
   @Autowired
   private StringRedisTemplate redisTemplate;
+
+  @DubboReference(version = "1.0.0")
+  private GoodsService goodsService;
 
   /**
    * 1. redis的zset 数据结构
@@ -41,4 +50,8 @@ public class GoodsSearchService {
     );
     return hotWords;
   }
+
+    public GoodsPageVO searchGoods(EsGoodsSearchParam goodsSearchParams, PageParams pageParams) {
+      return goodsService.searchGoods(goodsSearchParams, pageParams);
+    }
 }

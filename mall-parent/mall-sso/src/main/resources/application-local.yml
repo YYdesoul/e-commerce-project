@@ -1,0 +1,32 @@
+buyer:
+  url: http://localhost:10003/
+spring:
+  jackson:
+    time-zone: GMT+8
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ms_mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: root
+  redis:
+    port: 6379
+    host: localhost
+#启动时检查提供者是否存在，true报错，false忽略
+dubbo:
+  consumer:
+    check: false
+  scan:
+    base-packages: com.soul.shop.sso.api
+  registry:
+    group: dubbo_sso_service
+    address: nacos://${nacos.server-address}:${nacos.port}/?username=${nacos.username}&password=${nacos.password}
+  protocol:
+    port: 20881
+    name: dubbo
+nacos:
+  server-address: 127.0.0.1
+  port: 8848
+  username: nacos
+  password: nacos
+
+## 读写分离配置

@@ -1,0 +1,18 @@
+##启动端口号
+server:
+  port: 9989
+  ##接口访问路径
+  servlet:
+    context-path: /sso
+spring:
+  application:
+    name: mall-sso
+    #本机开发环境 多环境配置
+  profiles:
+    active: local
+
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: ms_
+  mapper-locations: classpath*:mapper/*.xml

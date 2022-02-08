@@ -8,6 +8,7 @@ import com.soul.shop.model.buyer.vo.CategoryVO;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +32,15 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public List<CategoryVO> findCategoryTree(Long parentId) {
     return categoryTree(parentId);
+  }
+
+  @Override
+  public List<String> getCategoryNameByIds(List<String> idList) {
+    LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.in(Category::getId, idList);
+    List<Category> categories = categoryMapper.selectList(queryWrapper);
+    List<String> strings = categories.stream().map(Category::getName).collect(Collectors.toList());
+    return strings;
   }
 
   private List<CategoryVO> categoryTree(Long parentId) {

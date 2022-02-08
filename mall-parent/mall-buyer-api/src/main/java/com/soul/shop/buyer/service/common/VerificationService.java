@@ -122,7 +122,7 @@ public class VerificationService {
       return Result.fail(-999, "验证码失效");
     }
     log.info("randomXStr: {}, xPos: {}", randomXStr, xPos);
-    boolean result = Math.abs(Integer.parseInt(randomXStr) - xPos) < 8;
+    boolean result = Math.abs(Integer.parseInt(randomXStr) - xPos) < 10;
     log.info("result is " + result);
     if (result) {
       // 验证成功，记录验证结果，有效时间为120s
