@@ -69,6 +69,8 @@ service.interceptors.request.use(
 
     // 获取访问Token
     let accessToken = Storage.getItem('accessToken');
+    let refreshToken = Storage.getItem('refreshToken');
+    console.log("refreshToken: " + refreshToken);
     if (accessToken && config.needToken) {
       config.headers['accessToken'] = accessToken;
       // 解析当前token时间
@@ -143,7 +145,8 @@ service.interceptors.response.use(
       isRefreshToken++;
 
       if (isRefreshToken === 1) {
-        refresh(error)
+        // 先注释掉，接口没写完，会有问题
+        // refresh(error)
         isRefreshToken = 0;
       }
     } else if (errorResponse.status === 404) {

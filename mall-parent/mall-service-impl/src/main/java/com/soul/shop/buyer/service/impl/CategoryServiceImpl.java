@@ -43,6 +43,11 @@ public class CategoryServiceImpl implements CategoryService {
     return strings;
   }
 
+  @Override
+  public Category findCategoryById(String categoryId) {
+    return categoryMapper.selectById(categoryId);
+  }
+
   private List<CategoryVO> categoryTree(Long parentId) {
     LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper.eq(Category::getStatus, 0);

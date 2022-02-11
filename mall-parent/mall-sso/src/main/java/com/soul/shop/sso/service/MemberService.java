@@ -1,5 +1,6 @@
 package com.soul.shop.sso.service;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.soul.shop.buyer.mapper.MemberMapper;
 import com.soul.shop.common.cache.CachePrefix;
@@ -8,11 +9,13 @@ import com.soul.shop.common.security.AuthUser;
 import com.soul.shop.common.security.Token;
 import com.soul.shop.common.security.UserEnums;
 import com.soul.shop.common.utils.EnumUtil;
+import com.soul.shop.common.utils.token.SecurityKey;
 import com.soul.shop.common.utils.token.TokenUtils;
 import com.soul.shop.common.vo.Result;
 import com.soul.shop.model.buyer.enums.ClientType;
 import com.soul.shop.model.buyer.pojo.Member;
 import com.soul.shop.model.buyer.vo.member.MemberVO;
+import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,22 +79,9 @@ public class MemberService {
     }
 
     private Token genToken(Member member) {
-        Token token = new Token();
         //accessToken refreshToken
         AuthUser authUser = new AuthUser(member.getUsername(), String.valueOf(member.getId()), member.getNickName(), UserEnums.MEMBER);
-        String accessToken = TokenUtils.createToken(member.getUsername(), authUser, 7 * 24 * 60L);
-        // 放入redis当中
-        redisTemplate.opsForValue().set(
-                CachePrefix.ACCESS_TOKEN.name() + UserEnums.MEMBER.name() + accessToken,
-                "true",
-                7, TimeUnit.DAYS);
-        String refreshToken = TokenUtils.createToken(member.getUsername(), authUser, 15 * 24 * 60L);
-        redisTemplate.opsForValue().set(
-                CachePrefix.REFRESH_TOKEN.name() + UserEnums.MEMBER.name() + refreshToken,
-                "true",
-                15, TimeUnit.DAYS);
-        token.setAccessToken(accessToken);
-        token.setRefreshToken(refreshToken);
+        Token token = generateTokenInRedis(authUser);
         return token;
 
     }
@@ -111,5 +101,40 @@ public class MemberService {
         BeanUtils.copyProperties(member, memberVO);
         memberVO.setId(String.valueOf(member.getId()));
         return memberVO;
+    }
+
+    /**
+     * 1. 拿到refreshTOken,进行jwt的解析，如果失败，token不合法
+     * 2. 如果解析成功，就拿到了对应的jwt中的信息， AuthUser对象
+     * 3. 去reids中判断refreshToken是否合法（过期）
+     * 4. 如果redis存在，证明refreshToken可用
+     * 5. 重新生成Token信息，返回即可（accessToken, refreshToken)
+     * @param refreshToken
+     * @return
+     */
+    public Result<Object> refreshToken(String refreshToken) {
+        Claims claims = TokenUtils.parseToken(refreshToken);
+        String authUserJson = claims.get(SecurityKey.USER_CONTEXT).toString();
+        AuthUser authUser = JSON.parseObject(authUserJson, AuthUser.class);
+        Token token = this.generateTokenInRedis(authUser);
+        return Result.success(token);
+    }
+
+    private Token generateTokenInRedis(AuthUser authUser) {
+        Token token = new Token();
+        String accessToken = TokenUtils.createToken(authUser.getUsername(), authUser, 7 * 24 * 60L);
+        // 放入redis当中
+        redisTemplate.opsForValue().set(
+                CachePrefix.ACCESS_TOKEN.name() + UserEnums.MEMBER.name() + accessToken,
+                "true",
+                7, TimeUnit.DAYS);
+        String refreshToken = TokenUtils.createToken(authUser.getUsername(), authUser, 15 * 24 * 60L);
+        redisTemplate.opsForValue().set(
+                CachePrefix.REFRESH_TOKEN.name() + UserEnums.MEMBER.name() + refreshToken,
+                "true",
+                15, TimeUnit.DAYS);
+        token.setAccessToken(accessToken);
+        token.setRefreshToken(refreshToken);
+        return token;
     }
 }

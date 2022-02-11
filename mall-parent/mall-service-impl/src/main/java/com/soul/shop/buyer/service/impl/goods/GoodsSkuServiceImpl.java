@@ -10,6 +10,7 @@ import com.soul.shop.common.vo.Result;
 import com.soul.shop.model.buyer.pojo.es.EsGoodsIndex;
 import com.soul.shop.model.buyer.pojo.goods.GoodsSku;
 import com.soul.shop.model.buyer.vo.goods.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @DubboService(version = "1.0.0")
 public class GoodsSkuServiceImpl implements GoodsSkuService {
 
@@ -81,7 +83,9 @@ public class GoodsSkuServiceImpl implements GoodsSkuService {
             }
             goodsSku = goodsSkus.get(0);
         } else {
-            goodsSku = goodsSkuMapper.selectById(Long.parseLong(skuId));
+            log.info("skuId is: {}", skuId);
+            long id = Long.parseLong(skuId);
+            goodsSku = goodsSkuMapper.selectById(id);
         }
         GoodsSkuVO goodsSkuVO = getGoodsSkuVO(goodsSku);
         goodsDetailVO.setData(goodsSkuVO);
@@ -104,6 +108,11 @@ public class GoodsSkuServiceImpl implements GoodsSkuService {
         // 促销信息
         goodsDetailVO.setPromotionMap(new HashMap<>());
         return Result.success(goodsDetailVO);
+    }
+
+    @Override
+    public GoodsSku findGoodsSkuById(String skuId) {
+        return goodsSkuMapper.selectById(skuId);
     }
 
     public GoodsSkuVO getGoodsSkuVO(GoodsSku goodsSku) {

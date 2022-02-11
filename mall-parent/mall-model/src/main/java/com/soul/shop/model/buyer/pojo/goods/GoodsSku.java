@@ -3,13 +3,16 @@ package com.soul.shop.model.buyer.pojo.goods;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 商品sku
  */
 @Data
-public class GoodsSku {
+public class GoodsSku implements Serializable {
 
     private Long id;
 
@@ -53,7 +56,7 @@ public class GoodsSku {
     @ApiModelProperty(value = "重量")
     private Double weight;
     /**
-     * @see com.mszlu.shop.model.buyer.eums.goods.GoodsStatusEnum
+     * @see com.soul.shop.model.buyer.enums.goods.GoodsStatusEnum
      */
     @ApiModelProperty(value = "上架状态")
     private Integer marketEnable;
@@ -107,7 +110,7 @@ public class GoodsSku {
     private String templateId;
 
     /**
-     * @see com.mszlu.shop.model.buyer.eums.goods.GoodsAuthEnum
+     * @see com.soul.shop.model.buyer.enums.goods.GoodsAuthEnum
      */
     @ApiModelProperty(value = "审核状态")
     private Integer isAuth;
@@ -133,10 +136,13 @@ public class GoodsSku {
     @ApiModelProperty(value = "销售模式", required = true)
     private String salesModel;
     /**
-     * @see com.mszlu.shop.model.buyer.eums.goods.GoodsTypeEnum
+     * @see com.soul.shop.model.buyer.enums.goods.GoodsTypeEnum
      */
     @ApiModelProperty(value = "商品类型", required = true)
     private Integer goodsType;
+
+    @ApiModelProperty(value = "更新时间")
+    private Date updateTime;
 
     public Double getWeight() {
         if (weight == null) {

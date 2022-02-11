@@ -5,6 +5,7 @@ import com.soul.shop.common.vo.Result;
 import com.soul.shop.model.buyer.enums.VerificationEnums;
 import com.soul.shop.sso.service.MemberService;
 import com.soul.shop.sso.service.VerificationService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,5 +32,11 @@ public class MembersController {
         }
 
         return Result.fail(-999, "请重新验证");
+    }
+
+    @ApiOperation("刷新token")
+    @GetMapping("/refresh/{refreshToken}")
+    public Result<Object> refreshToken(@PathVariable String refreshToken) {
+        return this.memberService.refreshToken(refreshToken);
     }
 }

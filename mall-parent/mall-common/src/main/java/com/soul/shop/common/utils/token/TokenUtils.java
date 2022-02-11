@@ -1,10 +1,13 @@
 package com.soul.shop.common.utils.token;
 
 import com.alibaba.fastjson.JSON;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
+@Slf4j
 public class TokenUtils {
 
     public static String createToken(String username, Object claim, Long expirationTime) {
@@ -21,5 +24,19 @@ public class TokenUtils {
                 .compact();
 
 
+    }
+
+    public static Claims parseToken(String refreshToken) {
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(SecretKeyUtil.generalKeyByDecoders())
+                    .parseClaimsJws(refreshToken)
+                    .getBody();
+            return claims;
+        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException e) {
+            // token 过期 认证失败等
+            log.error("token 过期，认证失败。");
+            return null;
+        }
     }
 }

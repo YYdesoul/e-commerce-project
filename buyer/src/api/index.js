@@ -1,4 +1,4 @@
-import request, {Method} from '@/plugins/request.js'
+import request, {Method, ssoUrl} from '@/plugins/request.js'
 
 // 获取首页楼层装修数据
 export function indexData (params) {
@@ -28,7 +28,7 @@ export function pageData (params) {
  */
 export function handleRefreshToken (token) {
   return request({
-    url: `/buyer/members/refresh/${token}`,
+    url: `${ssoUrl}/sso/members/refresh/${token}`,
     method: Method.GET,
     needToken: false
   })
