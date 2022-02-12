@@ -1,6 +1,7 @@
 package com.soul.shop.buyer.controller.common;
 
 import com.soul.shop.buyer.service.common.VerificationService;
+import com.soul.shop.common.aop.limit.LimitPoint;
 import com.soul.shop.common.vo.Result;
 import com.soul.shop.model.buyer.enums.VerificationEnums;
 import io.swagger.annotations.Api;
@@ -23,15 +24,18 @@ public class SliderImageController {
 
   @GetMapping("/{verificationEnums}")
   @ApiOperation("获取校验接口")
+  @LimitPoint(name = "获取校验接口", key = "getSliderImage")
   public Result getSliderImage(@RequestHeader String uuid,
-      @PathVariable("verificationEnums") VerificationEnums verificationEnums) {
-    return verificationService.createVerification(verificationEnums, uuid);
+      @PathVariable("verificationEnums") Integer verificationEnums) {
+    VerificationEnums verificationEnumsNew = VerificationEnums.codeOf(verificationEnums);
+    return verificationService.createVerification(verificationEnumsNew, uuid);
   }
 
   @PostMapping("/LOGIN")
   @ApiOperation("验证码预校验")
-  public Result getSliderImage(@RequestHeader String uuid, VerificationEnums verificationEnums,
+  public Result getSliderImage(@RequestHeader String uuid, Integer verificationEnums,
       Integer xPos) {
-    return verificationService.preCheck(verificationEnums, uuid, xPos);
+    VerificationEnums verificationEnumsNew = VerificationEnums.codeOf(verificationEnums);
+    return verificationService.preCheck(verificationEnumsNew, uuid, xPos);
   }
 }

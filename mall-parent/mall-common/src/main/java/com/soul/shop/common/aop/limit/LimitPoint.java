@@ -47,7 +47,7 @@ public @interface LimitPoint {
      *
      * @return int
      */
-    int limit() default 10;
+    int limit() default 20;
 
     /**
      * 类型  ip限制 还是自定义key值限制

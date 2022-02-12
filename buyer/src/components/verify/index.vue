@@ -93,6 +93,10 @@ export default {
     },
     getImg () { // 获取验证图片
       getVerifyImg(this.type).then(res => {
+        if(!res.success && res.code == 1001) {
+          this.$Message.error('访问过于频繁');
+          return;
+        }
         this.data = res.result;
       });
     }

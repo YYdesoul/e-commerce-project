@@ -6,6 +6,10 @@ spring:
       max-file-size: 30MB
       max-request-size: 30MB
 
+  redis:
+    host: localhost
+    port: 6379
+
 buyer:
   url: http://localhost:10003
 
@@ -27,6 +31,7 @@ nacos:
   port: 8848
   username: nacos
   password: nacos
+
 
 
 
