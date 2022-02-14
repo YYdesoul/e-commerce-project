@@ -11,6 +11,7 @@ import com.soul.shop.model.buyer.enums.goods.GoodsAuthEnum;
 import com.soul.shop.model.buyer.enums.goods.GoodsStatusEnum;
 import com.soul.shop.model.buyer.pojo.goods.GoodsSku;
 import com.soul.shop.model.buyer.vo.trade.CartSkuVO;
+import com.soul.shop.model.buyer.vo.trade.CartVO;
 import com.soul.shop.model.buyer.vo.trade.TradeVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -109,6 +110,18 @@ public class CartServiceImpl implements CartService {
         TradeVO tradeVO = tradeBuilder.buildCart(createTradeVO(cartTypeEnum, userId));
         log.info("finish buildAllTrade with return tradeVO: {}", tradeVO.toString());
         return Result.success(tradeVO);
+    }
+
+    @Override
+    public Result<Integer> countGoodsInTrade(CartTypeEnum cartTypeEnum, String userId) {
+        TradeVO tradeVO = tradeBuilder.buildCart(createTradeVO(cartTypeEnum, userId));
+        int count = 0;
+        for (CartVO cartVO : tradeVO.getCartList()) {
+            for (CartSkuVO cartSkuVO : cartVO.getSkuList()) {
+                count += cartSkuVO.getNum();
+            }
+        }
+        return Result.success(count);
     }
 
     private void addGoodsToCart(Integer num, GoodsSku goodsSku, List<CartSkuVO> skuList, CartTypeEnum cartTypeEnum) {

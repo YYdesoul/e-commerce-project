@@ -26,16 +26,14 @@ public class SliderImageController {
   @ApiOperation("获取校验接口")
   @LimitPoint(name = "获取校验接口", key = "getSliderImage")
   public Result getSliderImage(@RequestHeader String uuid,
-      @PathVariable("verificationEnums") Integer verificationEnums) {
-    VerificationEnums verificationEnumsNew = VerificationEnums.codeOf(verificationEnums);
-    return verificationService.createVerification(verificationEnumsNew, uuid);
+      @PathVariable("verificationEnums") VerificationEnums verificationEnums) {
+    return verificationService.createVerification(verificationEnums, uuid);
   }
 
   @PostMapping("/LOGIN")
   @ApiOperation("验证码预校验")
-  public Result getSliderImage(@RequestHeader String uuid, Integer verificationEnums,
+  public Result getSliderImage(@RequestHeader String uuid, VerificationEnums verificationEnums,
       Integer xPos) {
-    VerificationEnums verificationEnumsNew = VerificationEnums.codeOf(verificationEnums);
-    return verificationService.preCheck(verificationEnumsNew, uuid, xPos);
+    return verificationService.preCheck(verificationEnums, uuid, xPos);
   }
 }

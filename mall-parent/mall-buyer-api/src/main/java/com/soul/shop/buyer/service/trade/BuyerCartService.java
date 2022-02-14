@@ -54,4 +54,11 @@ public class BuyerCartService {
         CartTypeEnum cart = CartTypeEnum.CART;
         return cartService.buildAllTrade(cart, currentUser.getId());
     }
+
+    public Result<Integer> countGoodsInTrade() {
+        // 未登录的用户是不能将商品加入购物车的，也就无法查看购物车详情
+        AuthUser currentUser = UserContext.getCurrentUser();
+        CartTypeEnum cart = CartTypeEnum.CART;
+        return cartService.countGoodsInTrade(cart, currentUser.getId());
+    }
 }

@@ -45,9 +45,9 @@
               <Checkbox v-model="shop.checked" @on-change="changeChecked(shop.checked, 'shop', shop.storeId)"></Checkbox>
               <span class="go-shop-page" @click="goShopPage(shop.storeId)">{{shop.storeName}}</span>
             </div>
-            <span class="shop-coupon" v-if="shop.couponList.length" :class="couponAvailable === index ? 'shop-coupon-show' : ''" @click.stop="showCoupon(shop.id, index)">
+            <!-- <span class="shop-coupon" v-if="shop.couponList.length" :class="couponAvailable === index ? 'shop-coupon-show' : ''" @click.stop="showCoupon(shop.id, index)"> -->
               <!-- 优惠券模态框 -->
-              <div v-if="couponAvailable === index">
+              <!-- <div v-if="couponAvailable === index">
                 <div class="coupon-item" v-for="(item, index) in shop.couponList" :key="index">
                   <span v-if="item.couponType === 'PRICE'">￥{{ item.price }}</span>
                   <span v-if="item.couponType === 'DISCOUNT'">{{ item.couponDiscount }}折</span>
@@ -55,7 +55,7 @@
                   <Button class="coupon-btn" size="small" type="primary" @click="receiveShopCoupon(item)" :disabled="item.disabled">{{ item.disabled ? "已领取" : "领取" }}</Button>
                 </div>
               </div>
-            </span>
+            </span> -->
             <div class="promotion-notice">{{shop.promotionNotice}}</div>
           </div>
           <template v-for="(goods, goodsIndex) in shop.skuList">
@@ -302,17 +302,20 @@ export default {
       try {
         let res = await APICart.cartGoodsAll();
         this.loading = false;
+        console.log("res: " + res.success);
+        console.log("res.result.skuList.length: " + res.result.skuList.length);
+        console.log("res.result.cartList.length: " + res.result.cartList.length);
         if (res.success) {
           this.cartList = res.result.cartList;
           this.priceDetailDTO = res.result.priceDetailDTO;
           this.skuList = res.result.skuList;
           this.checkedNum = 0;
           let allChecked = true;
-          for (let k = 0; k < this.cartList.length; k++) {
-            let shop = this.cartList[k];
-            let list = await APIMember.couponList({ storeId: shop.storeId });
-            shop.couponList.push(...list.result.records);
-          }
+          // for (let k = 0; k < this.cartList.length; k++) {
+          //   let shop = this.cartList[k];
+          //   let list = await APIMember.couponList({ storeId: shop.storeId });
+          //   shop.couponList.push(...list.result.records);
+          // }
           for (let i = 0; i < this.skuList.length; i++) {
             if (this.skuList[i].checked) {
               this.checkedNum += this.skuList[i].num;
@@ -326,6 +329,7 @@ export default {
       } catch (error) {
         this.loading = false;
       }
+    this.loading = false;
     },
   },
   mounted() {

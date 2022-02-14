@@ -8,4 +8,6 @@ public interface CartService {
     Result<Object> addCart(CartTypeEnum cartTypeEnum, String skuId, Integer num, String userId);
 
     Result<TradeVO> buildAllTrade(CartTypeEnum cartTypeEnum, String userId);
+
+    Result<Integer> countGoodsInTrade(CartTypeEnum cart, String id);
 }

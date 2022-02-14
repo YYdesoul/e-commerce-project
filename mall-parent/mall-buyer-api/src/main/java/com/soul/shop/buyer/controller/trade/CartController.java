@@ -41,4 +41,10 @@ public class CartController {
     public Result<TradeVO> cartAll() {
         return this.buyerCartService.getAllTrade();
     }
+
+    @GetMapping("/count")
+    public Result<Integer> count() {
+        //TODO
+        return this.buyerCartService.countGoodsInTrade();
+    }
 }
